@@ -49,5 +49,9 @@ def my_hint(text: str,
         "theme": theme
     }
 
-    global_var._templates.append({template: data})
+    if global_var._containers == 0:
+        global_var._templates.append({template: data})
+    else:
+        hint_xaml = "    " * global_var._containers + template(**data)
+        global_var._template_stack[-1] += (hint_xaml)
 

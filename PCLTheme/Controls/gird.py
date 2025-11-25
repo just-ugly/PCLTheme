@@ -16,13 +16,17 @@ class grid:
                  column_width: list = None,
                  row: int = 1,
                  row_height: list = None,
-                 margin: list[int] = [0, 0, 0, 15]
+                 margin: list[int] = [0, 0, 0, 15],
+                 self_row: int = -1,
+                 self_column: int = -1
                  ):
         self.column = column
         self.row = row
         self.margin = margin
         self.column_width = column_width
         self.row_height = row_height
+        self.self_row = self_row
+        self.self_column = self_column
 
         # 检查参数正确性
         if not isinstance(margin, list) or len(margin) not in [4, 3, 2, 1]:
@@ -58,40 +62,79 @@ class grid:
 
 
     def __enter__(self):
-        global_var._containers += 1
+        containers = global_var.get_containers()
+
         grid_xaml = """
-""" + "    " * (global_var._containers-1) + f"""<Grid Margin=\"{self.changed_margin}\">
+""" + "    " * (containers-1) + f"""<Grid Margin=\"{self.changed_margin}\">
 """
         if self.column > 1:
-            grid_xaml += "    " * global_var._containers + f"""<Grid.ColumnDefinitions>
+            grid_xaml += "    " * containers + f"""<Grid.ColumnDefinitions>
 """
             for i in range(self.column):
-                grid_xaml += "    " * (global_var._containers+1) + f"""<ColumnDefinition Width=\"{self.column_width[i]}\"/>
+                grid_xaml += "    " * (containers+1) + f"""<ColumnDefinition Width=\"{self.column_width[i]}\"/>
 """
 
-            grid_xaml += "    " * global_var._containers + f"""</Grid.ColumnDefinitions>
+            grid_xaml += "    " * containers + f"""</Grid.ColumnDefinitions>
 """
         if self.row > 1:
-            grid_xaml += "    " * global_var._containers + f"""<Grid.RowDefinitions>
+            grid_xaml += "    " * containers + f"""<Grid.RowDefinitions>
 """
             for i in range(self.row):
-                grid_xaml += "    " * (global_var._containers+1) + f"""<RowDefinition Height=\"{self.row_height[i]}\"/>
+                grid_xaml += "    " * (containers+1) + f"""<RowDefinition Height=\"{self.row_height[i]}\"/>
 """
 
-            grid_xaml += "    " * global_var._containers + f"""</Grid.RowDefinitions>
+            grid_xaml += "    " * containers + f"""</Grid.RowDefinitions>
 """
 
-        global_var._template_stack.append(grid_xaml)
+        # 检查并插入Grid.Column和Grid.Row参数
+        if global_var.get_containers() == 0:
+            if self.self_row != -1 or self.self_column != -1:
+                raise ValueError("row/column参数错误, 需要在Grid中")
+        else:
+            # 先检查row参数
+            container_row = global_var.get_container_row()
+            if self.self_row == -1 and container_row != 1:
+                raise ValueError("row参数错误, 需要在有row设置的容器中设置row参数")
+            if self.self_row != -1 and container_row == 1:
+                raise ValueError("row参数错误, 所属容器无row参数")
+            if self.self_row != -1 and self.self_row >= container_row:
+                raise ValueError("row参数错误, row值超出范围")
+            # 检查column参数
+            container_column = global_var.get_container_column()
+            if self.self_column == -1 and container_column != 1:
+                raise ValueError("column参数错误, 需要在有column设置的容器中设置column参数")
+            if self.self_column != -1 and container_column == 1:
+                raise ValueError("column参数错误, 所属容器无column参数")
+            if self.self_column != -1 and self.self_column >= container_column:
+                raise ValueError("column参数错误, column值超出范围")
+
+        if self.self_row != -1:
+            grid_xaml = grid_xaml.replace("<Grid ", f"<Grid Grid.Row=\"{self.self_row}\" ", 1)
+        if self.self_column != -1:
+            grid_xaml = grid_xaml.replace("<Grid ", f"<Grid Grid.Column=\"{self.self_column}\" ", 1)
+        else:
+            grid_xaml = grid_xaml
+
+
+        global_var.add_container()
+        global_var.add_container_row(self.row)
+        global_var.add_container_column(self.column)
+        global_var.add_template_stack(grid_xaml)
 
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        grid_xaml = global_var._template_stack.pop()
-        grid_xaml += "    " * (global_var._containers-1) + f"""</Grid>
+        grid_xaml = global_var.pop_template_stack()
+        containers = global_var.get_containers()
+        grid_xaml += "    " * (containers-1) + f"""</Grid>
 
 """
-        global_var._containers -= 1
-        if global_var._containers != 0:
-            global_var._template_stack[-1] += grid_xaml
+        global_var.reduce_container()
+        containers -= 1
+        if containers != 0:
+            global_var.stack_template_stack(grid_xaml)
         else:
             template = PageTemplate(grid_xaml)
-            global_var._templates.append({template: {}})
+            global_var.add_template(template, {})
+
+        global_var.reduce_container_row()
+        global_var.reduce_container_column()

@@ -1,23 +1,31 @@
+import re
 from pathlib import Path
+from pydantic.v1.color import Color
 
 from chameleon import PageTemplate
 from PCLTheme import global_var
 
 
-
-def my_hint(text: str,
-            margin: list[int] = global_var.get_default_margin(),
-            theme: str = "Blue",
-            row: int = -1,
-            column: int = -1,
-            width: int = None,
-            height: int = None,
-            horizontal_alignment: str = "Stretch",
-            vertical_alignment: str = "Stretch"
-            ):
+def text_block(text: str,
+               text_wrapping: str = "Wrap",
+               font_size: int = global_var.get_default_text_size(),
+               font_weight: str = "Normal",
+               foreground: str = "T2",
+               margin: list[int] = global_var.get_default_text_margin(),
+               row: int = -1,
+               column: int = -1,
+               width: int = None,
+               height: int = None,
+               horizontal_alignment: str = "Stretch",
+               vertical_alignment: str = "Stretch"
+               ):
     """
-    创建一个提示框(MyHint)
-    :param text: 提示文字, 使用 &#xA; 进行换行
+    创建一个纯文本
+    :param text: 文本内容
+    :param text_wrapping: 换行方式
+    :param font_size: 文本大小
+    :param font_weight: 文本粗体设置
+    :param foreground: 文本前景颜色: 支持颜色代码或输入T1~T8应用主题色
     :param margin:
         边距列表，支持以下格式：
         左、上、右、下边距；
@@ -25,26 +33,32 @@ def my_hint(text: str,
         左右、上下边距；
         左右上下边距。
         默认为[0, 0, 0, 15]
-    :param theme: 颜色主题, 默认为 Blue, choice of {"Blue", "Red", "Yellow"}
     :param row: 所处行数, 作用于Grid中
     :param column: 所处列数, 作用于Grid中
-    :param width: 控件宽度, 选填(默认的就很好了)
-    :param height: 控件高度, 选填(默认的就很好了)
+    :param width: 控件宽度, 选填
+    :param height: 控件高度, 选填
     :param horizontal_alignment: 横向对齐方式；居左：Left、居中：Center、居右：Right、拉伸（默认）：Stretch
     :param vertical_alignment: 纵向对齐方式；居上：Top、居中：Center、居下：Bottom、拉伸（默认）：Stretch
     """
 
-    path = Path(__file__).cwd().joinpath("PCLTheme\\Controls\\my_hint.pt")
+    path = Path(__file__).cwd().joinpath("PCLTheme\\Controls\\text_block.pt")
     tpl_text = Path(path).read_text(encoding='utf-8')
 
     # 检查参数正确性
     if not isinstance(margin, list) or len(margin) not in [4, 3, 2, 1]:
         raise ValueError("margin参数错误, list长度需为1~4")
-    if not isinstance(theme, str) or theme not in ["Blue", "Red", "Yellow"]:
-        raise ValueError("theme参数错误, 需要为以下字符串之一: Blue, Red, Yellow")
+
+    # 颜色参数检测
+    if re.match(r"^T[1-8]$", foreground):
+        foreground = "{DynamicResource ColorBrush" + foreground.replace("T", "") + "}"
+    else:
+        try:
+            foreground = str(Color(foreground))
+        except ValueError:
+            raise ValueError("foreground参数错误, 需要为以下字符串之一: T1~T8, 颜色代码")
+
 
     # 转换margin参数
-    changed_margin = []
     if len(margin) == 1:
         changed_margin = f"{margin[0]},{margin[0]},{margin[0]},{margin[0]}"
     elif len(margin) == 2:
@@ -91,7 +105,9 @@ def my_hint(text: str,
 
     # 插入对齐参数
     if horizontal_alignment != "Stretch":
+        print("插入对齐参数")
         tpl_text = tpl_text.replace(" />", f" HorizontalAlignment=\"{horizontal_alignment}\" />", 1)
+        print(tpl_text)
     if vertical_alignment != "Stretch":
         tpl_text = tpl_text.replace(" />", f" VerticalAlignment=\"{vertical_alignment}\" />", 1)
 
@@ -100,8 +116,11 @@ def my_hint(text: str,
 
     data = {
         "text": text,
+        "text_wrapping": text_wrapping,
+        "font_size": font_size,
+        "font_weight": font_weight,
+        "foreground": foreground,
         "margin": changed_margin,
-        "theme": theme,
         "row": row,
         "column": column,
         "width": width,
@@ -115,4 +134,3 @@ def my_hint(text: str,
     else:
         hint_xaml = "    " * global_var.get_containers() + template(**data)
         global_var.stack_template_stack(hint_xaml)
-

@@ -1,0 +1,1 @@
+<TextBlock Margin="${margin}" Text="${text}" TextWrapping="${text_wrapping}" Foreground="${foreground}" FontWeight="${font_weight}" FontSize="${font_size}" />

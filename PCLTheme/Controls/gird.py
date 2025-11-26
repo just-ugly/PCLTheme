@@ -16,7 +16,7 @@ class grid:
                  column_width: list = None,
                  row: int = 1,
                  row_height: list = None,
-                 margin: list[int] = [0, 0, 0, 15],
+                 margin: list[int] = global_var.get_default_margin(),
                  self_row: int = -1,
                  self_column: int = -1
                  ):

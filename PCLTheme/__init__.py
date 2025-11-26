@@ -6,3 +6,6 @@ from .Controls.my_hint import my_hint
 
 # Grid控件
 from .Controls.gird import grid
+
+# Text_Block控件
+from .Controls.text_block import text_block

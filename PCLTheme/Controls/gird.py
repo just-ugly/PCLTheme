@@ -20,6 +20,23 @@ class grid:
                  self_row: int = -1,
                  self_column: int = -1
                  ):
+        """
+        创建一个Grid控件
+        :param column: 列数
+        :param column_width: 列宽列表
+        :param row: 行数
+        :param row_height: 行高列表
+        :param margin:
+            边距列表，支持以下格式：
+            左、上、右、下边距；
+            左右、上、下边距；
+            左右、上下边距；
+            左右上下边距。
+            默认为 `global_var.get_default_margin()`
+        :param self_row: 所处行数, 作用于Grid中
+        :param self_column: 所处列数, 作用于Grid中
+        """
+
         self.column = column
         self.row = row
         self.margin = margin
@@ -29,8 +46,8 @@ class grid:
         self.self_column = self_column
 
         # 检查参数正确性
-        if not isinstance(margin, list) or len(margin) not in [4, 3, 2, 1]:
-            raise ValueError("margin参数错误, list长度需为1~4")
+        self.margin = global_var.margin_check_convert(self.margin)
+
         if column < 1:
             raise ValueError("column参数错误, 需要大于0")
         if row < 1:
@@ -40,17 +57,6 @@ class grid:
         if row_height is not None and len(row_height) != row:
             raise ValueError("row_height参数错误, 需要与row参数一致")
 
-
-        # 转换margin参数
-        self.changed_margin = []
-        if len(margin) == 1:
-            self.changed_margin = f"{margin[0]},{margin[0]},{margin[0]},{margin[0]}"
-        elif len(margin) == 2:
-            self.changed_margin = f"{margin[0]},{margin[1]},{margin[0]},{margin[1]}"
-        elif len(margin) == 3:
-            self.changed_margin = f"{margin[0]},{margin[1]},{margin[0]},{margin[2]}"
-        else:
-            self.changed_margin = f"{margin[0]},{margin[1]},{margin[2]},{margin[3]}"
 
         # 转换column_width参数
         if column_width is None:
@@ -65,7 +71,7 @@ class grid:
         containers = global_var.get_containers()
 
         grid_xaml = """
-""" + "    " * (containers-1) + f"""<Grid Margin=\"{self.changed_margin}\">
+""" + "    " * (containers-1) + f"""<Grid Margin=\"{self.margin}\">
 """
         if self.column > 1:
             grid_xaml += "    " * containers + f"""<Grid.ColumnDefinitions>
@@ -87,26 +93,7 @@ class grid:
 """
 
         # 检查并插入Grid.Column和Grid.Row参数
-        if global_var.get_containers() == 0:
-            if self.self_row != -1 or self.self_column != -1:
-                raise ValueError("row/column参数错误, 需要在Grid中")
-        else:
-            # 先检查row参数
-            container_row = global_var.get_container_row()
-            if self.self_row == -1 and container_row != 1:
-                raise ValueError("row参数错误, 需要在有row设置的容器中设置row参数")
-            if self.self_row != -1 and container_row == 1:
-                raise ValueError("row参数错误, 所属容器无row参数")
-            if self.self_row != -1 and self.self_row >= container_row:
-                raise ValueError("row参数错误, row值超出范围")
-            # 检查column参数
-            container_column = global_var.get_container_column()
-            if self.self_column == -1 and container_column != 1:
-                raise ValueError("column参数错误, 需要在有column设置的容器中设置column参数")
-            if self.self_column != -1 and container_column == 1:
-                raise ValueError("column参数错误, 所属容器无column参数")
-            if self.self_column != -1 and self.self_column >= container_column:
-                raise ValueError("column参数错误, column值超出范围")
+        global_var.row_column_check(self.self_row, self.self_column)
 
         if self.self_row != -1:
             grid_xaml = grid_xaml.replace("<Grid ", f"<Grid Grid.Row=\"{self.self_row}\" ", 1)
@@ -126,7 +113,6 @@ class grid:
         grid_xaml = global_var.pop_template_stack()
         containers = global_var.get_containers()
         grid_xaml += "    " * (containers-1) + f"""</Grid>
-
 """
         global_var.reduce_container()
         containers -= 1

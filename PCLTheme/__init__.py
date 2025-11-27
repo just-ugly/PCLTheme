@@ -9,3 +9,6 @@ from .Controls.gird import grid
 
 # Text_Block控件
 from .Controls.text_block import text_block
+
+# my_card控件
+from .Controls.my_card import my_card

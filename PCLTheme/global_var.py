@@ -15,6 +15,9 @@ _templates = []
 _template_stack = []
 _container_rows = []
 _container_columns = []
+
+_cards = 0
+
 _default_margin = [0, 0, 0, 15]
 _default_text_margin = [0, 0, 0, 5]
 _default_text_size = 16
@@ -130,6 +133,29 @@ def get_container_column():
     return _container_columns[-1]
 
 
+def add_cards():
+    """
+    _cards += 1
+    """
+    global _cards
+    _cards += 1
+
+
+def get_cards():
+    """
+    返回 _cards
+    """
+    return _cards
+
+
+def reduce_cards():
+    """
+    _cards -= 1
+    """
+    global _cards
+    _cards -= 1
+
+
 def get_default_margin():
     """
     返回 _default_margin
@@ -180,3 +206,43 @@ def set_default_text_size(text_size: int):
     """
     global _default_text_size
     _default_text_size = text_size
+
+
+def margin_check_convert(margin: list[int]):
+    if not isinstance(margin, list) or len(margin) not in [4, 3, 2, 1]:
+        raise ValueError("margin参数错误, list长度需为1~4")
+
+    # 转换margin参数
+    if len(margin) == 1:
+        changed_margin = f"{margin[0]},{margin[0]},{margin[0]},{margin[0]}"
+    elif len(margin) == 2:
+        changed_margin = f"{margin[0]},{margin[1]},{margin[0]},{margin[1]}"
+    elif len(margin) == 3:
+        changed_margin = f"{margin[0]},{margin[1]},{margin[0]},{margin[2]}"
+    else:
+        changed_margin = f"{margin[0]},{margin[1]},{margin[2]},{margin[3]}"
+
+    return changed_margin
+
+
+def row_column_check(row: int, column: int):
+    if get_containers() == 0:
+        if row != -1 or column != -1:
+            raise ValueError("row/column参数错误, 需要在Grid中")
+    else:
+        # 先检查row参数
+        container_row = get_container_row()
+        if row == -1 and container_row != 1:
+            raise ValueError("row参数错误, 需要在有row设置的容器中设置row参数")
+        if row != -1 and container_row == 1:
+            raise ValueError("row参数错误, 所属容器无row参数")
+        if row != -1 and row >= container_row:
+            raise ValueError("row参数错误, row值超出范围")
+        # 检查column参数
+        container_column = get_container_column()
+        if column == -1 and container_column != 1:
+            raise ValueError("column参数错误, 需要在有column设置的容器中设置column参数")
+        if column != -1 and container_column == 1:
+            raise ValueError("column参数错误, 所属容器无column参数")
+        if column != -1 and column >= container_column:
+            raise ValueError("column参数错误, column值超出范围")

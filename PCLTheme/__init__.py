@@ -12,3 +12,6 @@ from .Controls.text_block import text_block
 
 # my_card控件
 from .Controls.my_card import my_card
+
+# stack_panel控件
+from .Controls.stack_panel import stack_panel

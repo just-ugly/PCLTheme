@@ -16,10 +16,12 @@ _template_stack = []
 _container_rows = []
 _container_columns = []
 
-_cards = 0
 
-_default_margin = [0, 0, 0, 15]
-_default_text_margin = [0, 0, 0, 5]
+_default_grid_margin = [0, 0, 0, 0]
+_default_panel_margin = [25, 40, 23, 15]
+_default_card_margin = [0, 0, 0, 15]
+_default_hint_margin = [0, 8, 0, 2]
+_default_text_margin = [0, 0, 0, 4]
 _default_text_size = 16
 
 
@@ -133,45 +135,76 @@ def get_container_column():
     return _container_columns[-1]
 
 
-def add_cards():
-    """
-    _cards += 1
-    """
-    global _cards
-    _cards += 1
-
-
-def get_cards():
-    """
-    返回 _cards
-    """
-    return _cards
-
-
-def reduce_cards():
-    """
-    _cards -= 1
-    """
-    global _cards
-    _cards -= 1
-
-
-def get_default_margin():
+def get_default_grid_margin():
     """
     返回 _default_margin
     """
-    return _default_margin
+    return _default_grid_margin
 
 
-def set_default_margin(margin: list):
+def set_default_grid_margin(margin: list):
     """
     设置 _default_margin
     :param margin: 默认margin
     """
-    global _default_margin
+    global _default_grid_margin
     if len(margin) not in [4, 3, 2, 1]:
         raise ValueError("margin参数错误, list长度需为1~4")
-    _default_margin = margin
+    _default_grid_margin = margin
+
+
+def get_default_panel_margin():
+    """
+    返回 _default_panel_margin
+    """
+    return _default_panel_margin
+
+
+def set_default_panel_margin(panel_margin: list):
+    """
+    设置 _default_panel_margin
+    :param panel_margin: 默认panel_margin
+    """
+    global _default_panel_margin
+    if len(panel_margin) not in [4, 3, 2, 1]:
+        raise ValueError("panel_margin参数错误, list长度需为1~4")
+    _default_panel_margin = panel_margin
+
+
+def get_default_card_margin():
+    """
+    返回 _default_card_margin
+    """
+    return _default_card_margin
+
+
+def set_default_card_margin(card_margin: list):
+    """
+    设置 _default_card_margin
+    :param card_margin: 默认card_margin
+    """
+    global _default_card_margin
+    if len(card_margin) not in [4, 3, 2, 1]:
+        raise ValueError("card_margin参数错误, list长度需为1~4")
+    _default_card_margin = card_margin
+
+
+def get_default_hint_margin():
+    """
+    返回 _default_hint_margin
+    """
+    return _default_hint_margin
+
+
+def set_default_hint_margin(hint_margin: list):
+    """
+    设置 _default_hint_margin
+    :param hint_margin: 默认hint_margin
+    """
+    global _default_hint_margin
+    if len(hint_margin) not in [4, 3, 2, 1]:
+        raise ValueError("hint_margin参数错误, list长度需为1~4")
+    _default_hint_margin = hint_margin
 
 
 def get_default_text_margin():
@@ -208,19 +241,19 @@ def set_default_text_size(text_size: int):
     _default_text_size = text_size
 
 
-def margin_check_convert(margin: list[int]):
-    if not isinstance(margin, list) or len(margin) not in [4, 3, 2, 1]:
+def margin_padding_check_convert(margin_padding: list[int]):
+    if not isinstance(margin_padding, list) or len(margin_padding) not in [4, 3, 2, 1]:
         raise ValueError("margin参数错误, list长度需为1~4")
 
     # 转换margin参数
-    if len(margin) == 1:
-        changed_margin = f"{margin[0]},{margin[0]},{margin[0]},{margin[0]}"
-    elif len(margin) == 2:
-        changed_margin = f"{margin[0]},{margin[1]},{margin[0]},{margin[1]}"
-    elif len(margin) == 3:
-        changed_margin = f"{margin[0]},{margin[1]},{margin[0]},{margin[2]}"
+    if len(margin_padding) == 1:
+        changed_margin = f"{margin_padding[0]},{margin_padding[0]},{margin_padding[0]},{margin_padding[0]}"
+    elif len(margin_padding) == 2:
+        changed_margin = f"{margin_padding[0]},{margin_padding[1]},{margin_padding[0]},{margin_padding[1]}"
+    elif len(margin_padding) == 3:
+        changed_margin = f"{margin_padding[0]},{margin_padding[1]},{margin_padding[0]},{margin_padding[2]}"
     else:
-        changed_margin = f"{margin[0]},{margin[1]},{margin[2]},{margin[3]}"
+        changed_margin = f"{margin_padding[0]},{margin_padding[1]},{margin_padding[2]},{margin_padding[3]}"
 
     return changed_margin
 

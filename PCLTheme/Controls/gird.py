@@ -1,4 +1,3 @@
-from typing import ContextManager
 from PCLTheme import global_var
 
 from chameleon import PageTemplate
@@ -16,7 +15,7 @@ class grid:
                  column_width: list = None,
                  row: int = 1,
                  row_height: list = None,
-                 margin: list[int] = global_var.get_default_margin(),
+                 margin: list[int] = global_var.get_default_grid_margin(),
                  self_row: int = -1,
                  self_column: int = -1
                  ):
@@ -45,8 +44,8 @@ class grid:
         self.self_row = self_row
         self.self_column = self_column
 
-        # 检查参数正确性
-        self.margin = global_var.margin_check_convert(self.margin)
+        # 检查并转换参数正确性
+        self.margin = global_var.margin_padding_check_convert(self.margin)
 
         if column < 1:
             raise ValueError("column参数错误, 需要大于0")

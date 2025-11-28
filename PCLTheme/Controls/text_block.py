@@ -45,7 +45,7 @@ def text_block(text: str,
     tpl_text = Path(path).read_text(encoding='utf-8')
 
     # 检查参数正确性
-    margin = global_var.margin_check_convert(margin)
+    margin = global_var.margin_padding_check_convert(margin)
 
     # 颜色参数检测
     if re.match(r"^T[1-8]$", foreground):

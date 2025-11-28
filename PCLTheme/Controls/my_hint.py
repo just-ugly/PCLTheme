@@ -6,7 +6,7 @@ from PCLTheme import global_var
 
 
 def my_hint(text: str,
-            margin: list[int] = global_var.get_default_margin(),
+            margin: list[int] = global_var.get_default_grid_margin(),
             theme: str = "Blue",
             row: int = -1,
             column: int = -1,
@@ -38,7 +38,7 @@ def my_hint(text: str,
     tpl_text = Path(path).read_text(encoding='utf-8')
 
     # 检查参数正确性
-    margin = global_var.margin_check_convert(margin)
+    margin = global_var.margin_padding_check_convert(margin)
     if not isinstance(theme, str) or theme not in ["Blue", "Red", "Yellow"]:
         raise ValueError("theme参数错误, 需要为以下字符串之一: Blue, Red, Yellow")
 

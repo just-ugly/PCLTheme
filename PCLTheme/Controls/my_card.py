@@ -1,6 +1,3 @@
-from pathlib import Path
-from turtle import title
-
 from chameleon import PageTemplate
 from PCLTheme import global_var
 
@@ -14,7 +11,7 @@ class my_card:
                  title: str,
                  can_swap: bool = True,
                  default_swaped: bool = False,
-                 margin: list[int] = global_var.get_default_margin(),
+                 margin: list[int] = global_var.get_default_card_margin(),
                  row: int = -1,
                  column: int = -1,
                  width: int = None,
@@ -33,7 +30,7 @@ class my_card:
             左右、上、下边距；
             左右、上下边距；
             左右上下边距。
-            默认为[0, 0, 0, 15]
+            默认为global_var.get_default_card_margin()
         :param row: 所处行数, 作用于Grid中
         :param column: 所处列数, 作用于Grid中
         :param width: 控件宽度, 选填(默认的就很好了)
@@ -53,8 +50,8 @@ class my_card:
         self.horizontal_alignment = horizontal_alignment
         self.vertical_alignment = vertical_alignment
 
-        # 检查margin
-        self.margin = global_var.margin_check_convert(self.margin)
+        # 检查并转换margin
+        self.margin = global_var.margin_padding_check_convert(self.margin)
 
         # 检测折叠参数合理性
         if (not self.can_swap) and self.default_swaped:
@@ -76,8 +73,7 @@ class my_card:
             card_xaml = card_xaml.replace("<local:MyCard ", f"<local:MyCard Grid.Row=\"{self.row}\" ", 1)
         if self.column != -1:
             card_xaml = card_xaml.replace("<local:MyCard ", f"<local:MyCard Grid.Column=\"{self.column}\" ", 1)
-        else:
-            card_xaml = card_xaml
+
 
         # 插入width和height参数
         if self.width is not None:

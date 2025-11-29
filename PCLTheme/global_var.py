@@ -6,7 +6,10 @@ _templates: 模板列表, 列表的每一个元素均为一个字典, key为模�
 _template_stack: 嵌套模板列表堆栈, 用于暂时存储嵌套容器中的模板列表, 列表的第n个子列表代表当前第n+1个嵌套
 _container_rows: _containers中每个容器的行数
 _container_columns: _containers中每个容器的列数
-_default_margin: 默认控件margin参数
+
+_default_XXX_margin: 该控件默认margin参数
+
+_default_text_size: 默认字体大小
 """
 from chameleon import PageTemplate
 
@@ -22,6 +25,11 @@ _default_panel_margin = [25, 40, 23, 15]
 _default_card_margin = [0, 0, 0, 15]
 _default_hint_margin = [0, 8, 0, 2]
 _default_text_margin = [0, 0, 0, 4]
+_default_button_margin = [0, 4, 0, 10]
+
+_default_button_padding = [0, 0, 0, 0]
+
+
 _default_text_size = 16
 
 
@@ -135,6 +143,7 @@ def get_container_column():
     return _container_columns[-1]
 
 
+# margin
 def get_default_grid_margin():
     """
     返回 _default_margin
@@ -223,6 +232,43 @@ def set_default_text_margin(text_margin: list):
     if len(text_margin) not in [4, 3, 2, 1]:
         raise ValueError("text_margin参数错误, list长度需为1~4")
     _default_text_margin = text_margin
+
+
+def get_default_button_margin():
+    """
+    返回 _default_button_margin
+    """
+    return _default_button_margin
+
+
+def set_default_button_margin(button_margin: list):
+    """
+    设置 _default_button_margin
+    :param button_margin: 默认button_margin
+    """
+    global _default_button_margin
+    if len(button_margin) not in [4, 3, 2, 1]:
+        raise ValueError("button_margin参数错误, list长度需为1~4")
+    _default_button_margin = button_margin
+
+
+# padding
+def get_default_button_padding():
+    """
+    返回 _default_button_padding
+    """
+    return _default_button_padding
+
+
+def set_default_button_padding(button_padding: list):
+    """
+    设置 _default_button_padding
+    :param button_padding: 默认button_padding
+    """
+    global _default_button_padding
+    if len(button_padding) not in [4, 3, 2, 1]:
+        raise ValueError("button_padding参数错误, list长度需为1~4")
+    _default_button_padding = button_padding
 
 
 def get_default_text_size():

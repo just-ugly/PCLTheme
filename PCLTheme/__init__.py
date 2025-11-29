@@ -15,3 +15,6 @@ from .Controls.my_card import my_card
 
 # stack_panel控件
 from .Controls.stack_panel import stack_panel
+
+# my_button控件
+from .Controls.my_button import my_button

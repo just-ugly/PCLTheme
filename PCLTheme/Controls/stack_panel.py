@@ -48,8 +48,7 @@ class stack_panel:
     def __enter__(self):
         containers = global_var.get_containers()
 
-        panel_xaml = """
-""" + "    " * (containers-1) + f"""<StackPanel Margin=\"{self.margin}\" Orientation=\"{self.orientation}\">
+        panel_xaml = "    " * containers + f"""<StackPanel Margin=\"{self.margin}\" Orientation=\"{self.orientation}\">
 """
         # 检查并插入row和column参数
         global_var.row_column_check(self.row, self.column)

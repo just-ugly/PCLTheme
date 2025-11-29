@@ -62,8 +62,7 @@ class my_card:
     def __enter__(self):
         containers = global_var.get_containers()
 
-        card_xaml = """
-""" + "    " * (containers-1) + f"""<local:MyCard Margin=\"{self.margin}\" Title=\"{self.title}\" CanSwap=\"{self.can_swap}\" IsSwaped=\"{self.default_swaped}\" >
+        card_xaml = "    " * containers + f"""<local:MyCard Margin=\"{self.margin}\" Title=\"{self.title}\" CanSwap=\"{self.can_swap}\" IsSwaped=\"{self.default_swaped}\" >
 """
 
         # 检查并插入row和column参数

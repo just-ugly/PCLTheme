@@ -1,1 +1,0 @@
-<local:MyCard Margin="${margin}" Title="${title}" CanSwap="${can_swap}" IsSwaped="${default_swaped}" >

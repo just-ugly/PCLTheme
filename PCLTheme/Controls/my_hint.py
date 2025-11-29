@@ -1,8 +1,5 @@
-from pathlib import Path
-
 from chameleon import PageTemplate
 from PCLTheme import global_var
-
 
 
 def my_hint(text: str,
@@ -34,8 +31,9 @@ def my_hint(text: str,
     :param vertical_alignment: 纵向对齐方式；居上：Top、居中：Center、居下：Bottom、拉伸（默认）：Stretch
     """
 
-    path = Path(__file__).cwd().joinpath("PCLTheme\\Controls\\my_hint.pt")
-    tpl_text = Path(path).read_text(encoding='utf-8')
+
+    tpl_text = """<local:MyHint Margin="${margin}" Theme="${theme}" Text="${text}" />
+"""
 
     # 检查参数正确性
     margin = global_var.margin_padding_check_convert(margin)

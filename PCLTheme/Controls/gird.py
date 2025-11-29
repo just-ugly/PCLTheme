@@ -69,8 +69,7 @@ class grid:
     def __enter__(self):
         containers = global_var.get_containers()
 
-        grid_xaml = """
-""" + "    " * (containers-1) + f"""<Grid Margin=\"{self.margin}\">
+        grid_xaml = "    " * containers + f"""<Grid Margin=\"{self.margin}\">
 """
         if self.column > 1:
             grid_xaml += "    " * containers + f"""<Grid.ColumnDefinitions>

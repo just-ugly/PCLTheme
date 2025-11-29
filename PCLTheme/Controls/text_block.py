@@ -1,5 +1,4 @@
 import re
-from pathlib import Path
 from pydantic.v1.color import Color
 
 from chameleon import PageTemplate
@@ -41,8 +40,8 @@ def text_block(text: str,
     :param vertical_alignment: 纵向对齐方式；居上：Top、居中：Center、居下：Bottom、拉伸（默认）：Stretch
     """
 
-    path = Path(__file__).cwd().joinpath("PCLTheme\\Controls\\text_block.pt")
-    tpl_text = Path(path).read_text(encoding='utf-8')
+    tpl_text = """<TextBlock Margin="${margin}" Text="${text}" TextWrapping="${text_wrapping}" Foreground="${foreground}" FontWeight="${font_weight}" FontSize="${font_size}" />
+"""
 
     # 检查参数正确性
     margin = global_var.margin_padding_check_convert(margin)

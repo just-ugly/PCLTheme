@@ -68,6 +68,7 @@ class grid:
 
     def __enter__(self):
         containers = global_var.get_containers()
+        global_var.add_container_stack("Grid")
 
         grid_xaml = "    " * containers + f"""<Grid Margin=\"{self.margin}\">
 """
@@ -122,3 +123,4 @@ class grid:
 
         global_var.reduce_container_row()
         global_var.reduce_container_column()
+        global_var.reduce_container_stack()

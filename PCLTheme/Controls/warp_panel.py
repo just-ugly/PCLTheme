@@ -2,9 +2,9 @@ from chameleon import PageTemplate
 from PCLTheme import global_var
 
 
-class stack_panel:
+class warp_panel:
     """
-    StackPanel控件
+    WarpPanel控件
     """
 
     def __init__(self,
@@ -16,7 +16,7 @@ class stack_panel:
                  column: int = -1
                  ):
         """
-        创建一个StackPanel
+        创建一个WarpPanel
         :param orientation: 排列方向；垂直：Vertical、水平：Horizontal
         :param horizontal_alignment: 横向对齐方式；居左：Left、居中：Center、居右：Right、拉伸（默认）：Stretch
         :param vertical_alignment: 纵向对齐方式；居上：Top、居中：Center、居下：Bottom、拉伸（默认）：Stretch
@@ -47,17 +47,17 @@ class stack_panel:
 
     def __enter__(self):
         containers = global_var.get_containers()
-        global_var.add_container_stack("StackPanel")
+        global_var.add_container_stack("WarpPanel")
 
-        panel_xaml = "    " * containers + f"""<StackPanel Margin=\"{self.margin}\" Orientation=\"{self.orientation}\">
+        panel_xaml = "    " * containers + f"""<WarpPanel Margin=\"{self.margin}\" Orientation=\"{self.orientation}\">
 """
         # 检查并插入row和column参数
         global_var.row_column_check(self.row, self.column)
 
         if self.row != -1:
-            panel_xaml = panel_xaml.replace("<StackPanel ", f"<StackPanel Grid.Row=\"{self.row}\" ", 1)
+            panel_xaml = panel_xaml.replace("<WarpPanel ", f"<WarpPanel Grid.Row=\"{self.row}\" ", 1)
         if self.column != -1:
-            panel_xaml = panel_xaml.replace("<StackPanel ", f"<StackPanel Grid.Column=\"{self.column}\" ", 1)
+            panel_xaml = panel_xaml.replace("<WarpPanel ", f"<WarpPanel Grid.Column=\"{self.column}\" ", 1)
 
         # 插入对齐参数
         if self.horizontal_alignment != "Stretch":
@@ -74,8 +74,9 @@ class stack_panel:
     def __exit__(self, exc_type, exc_val, exc_tb):
         panel_xaml = global_var.pop_template_stack()
         containers = global_var.get_containers()
-        panel_xaml += "    " * (containers-1) + f"""</StackPanel>
+        panel_xaml += "    " * (containers-1) + f"""</WarpPanel>
 """
+
 
         global_var.reduce_container()
         containers -= 1

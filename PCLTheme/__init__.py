@@ -1,20 +1,26 @@
 # 构建器
 from PCLTheme.build import build
 
-# My_Hint控件
+# local:MyHint控件
 from .Controls.my_hint import my_hint
 
 # Grid控件
 from .Controls.gird import grid
 
-# Text_Block控件
+# TextBlock控件
 from .Controls.text_block import text_block
 
-# my_card控件
+# local:MyCard控件
 from .Controls.my_card import my_card
 
-# stack_panel控件
+# StackPanel控件
 from .Controls.stack_panel import stack_panel
 
-# my_button控件
+# WarpPanel控件
+from .Controls.warp_panel import warp_panel
+
+# local:MyButton控件
 from .Controls.my_button import my_button
+
+# local:MyImage控件
+from .Controls.my_image import my_image

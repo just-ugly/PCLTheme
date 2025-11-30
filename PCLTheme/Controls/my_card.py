@@ -1,3 +1,5 @@
+import warnings
+
 from chameleon import PageTemplate
 from PCLTheme import global_var
 
@@ -61,6 +63,9 @@ class my_card:
 
     def __enter__(self):
         containers = global_var.get_containers()
+        if global_var.card_in_card():
+            warnings.warn("注意到您在MyCard控件内又使用了MyCard控件, 请尽量避免这种情况orz", UserWarning)
+        global_var.add_container_stack("MyCard")
 
         card_xaml = "    " * containers + f"""<local:MyCard Margin=\"{self.margin}\" Title=\"{self.title}\" CanSwap=\"{self.can_swap}\" IsSwaped=\"{self.default_swaped}\" >
 """
@@ -106,3 +111,4 @@ class my_card:
 
         global_var.reduce_container_row()
         global_var.reduce_container_column()
+        global_var.reduce_container_stack()

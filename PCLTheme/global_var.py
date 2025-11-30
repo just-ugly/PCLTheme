@@ -6,8 +6,10 @@ _templates: 模板列表, 列表的每一个元素均为一个字典, key为模�
 _template_stack: 嵌套模板列表堆栈, 用于暂时存储嵌套容器中的模板列表, 列表的第n个子列表代表当前第n+1个嵌套
 _container_rows: _containers中每个容器的行数
 _container_columns: _containers中每个容器的列数
+_container_stack: 嵌套容器堆栈, 用于暂时存储嵌套容器的信息
 
 _default_XXX_margin: 该控件默认margin参数
+_default_XXX_padding: 该控件默认padding参数
 
 _default_text_size: 默认字体大小
 """
@@ -18,6 +20,7 @@ _templates = []
 _template_stack = []
 _container_rows = []
 _container_columns = []
+_container_stack = []
 
 
 _default_grid_margin = [0, 0, 0, 0]
@@ -26,6 +29,7 @@ _default_card_margin = [0, 0, 0, 15]
 _default_hint_margin = [0, 8, 0, 2]
 _default_text_margin = [0, 0, 0, 4]
 _default_button_margin = [0, 4, 0, 10]
+_default_image_margin = [0, 0, 0, 0]
 
 _default_button_padding = [0, 0, 0, 0]
 
@@ -143,6 +147,31 @@ def get_container_column():
     return _container_columns[-1]
 
 
+def get_container_stack():
+    """
+    返回 container_stack 中的最后一个元素
+    """
+    global _container_stack
+    return _container_stack[-1]
+
+
+def add_container_stack(container_name: str):
+    """
+    在 container_stack 中新增一个元素
+    :param container_name: 嵌套容器的名称
+    """
+    global _container_stack
+    _container_stack.append(container_name)
+
+
+def reduce_container_stack():
+    """
+    删除 container_stack 中的最后一个元素
+    """
+    global _container_stack
+    _container_stack.pop()
+
+
 # margin
 def get_default_grid_margin():
     """
@@ -252,6 +281,24 @@ def set_default_button_margin(button_margin: list):
     _default_button_margin = button_margin
 
 
+def get_default_image_margin():
+    """
+    返回 _default_picture_margin
+    """
+    return _default_image_margin
+
+
+def set_default_image_margin(picture_margin: list):
+    """
+    设置 _default_picture_margin
+    :param picture_margin: 默认picture_margin
+    """
+    global _default_image_margin
+    if len(picture_margin) not in [4, 3, 2, 1]:
+        raise ValueError("picture_margin参数错误, list长度需为1~4")
+    _default_image_margin = picture_margin
+
+
 # padding
 def get_default_button_padding():
     """
@@ -325,3 +372,27 @@ def row_column_check(row: int, column: int):
             raise ValueError("column参数错误, 所属容器无column参数")
         if column != -1 and column >= container_column:
             raise ValueError("column参数错误, column值超出范围")
+
+
+def clear():
+    """
+    清除所有全局变量
+    """
+    global _containers, _templates, _template_stack, _container_rows, _container_columns, _container_stack
+    _containers = 0
+    _templates = []
+    _template_stack = []
+    _container_rows = []
+    _container_columns = []
+    _container_stack = []
+
+
+# 辅助与帮助性功能
+def card_in_card():
+    """
+    检查当前是否在Card中
+    """
+    global _container_stack
+    if "MyCard" in _container_stack:
+        return True
+    return False

@@ -25,7 +25,7 @@ def text_block(text: str,
     :param text_wrapping: 换行方式
     :param font_size: 文本大小
     :param font_weight: 文本粗体设置
-    :param foreground: 文本前景颜色: 支持颜色代码或输入T1~T8应用主题色
+    :param foreground: 文本前景颜色: 支持颜色代码或输入T1~T8应用主题色, 默认为T2
     :param background: 文本背景颜色: 支持颜色代码或输入T1~T8应用主题色, 默认为None
     :param margin:
         边距列表，支持以下格式：

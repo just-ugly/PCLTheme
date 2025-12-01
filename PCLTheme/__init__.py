@@ -22,6 +22,9 @@ from .Controls.warp_panel import warp_panel
 # local:MyButton控件
 from .Controls.my_button import my_button
 
+# local:MyTextButton控件
+from .Controls.my_text_button import my_text_button
+
 # local:MyImage控件
 from .Controls.my_image import my_image
 

@@ -24,3 +24,6 @@ from .Controls.my_button import my_button
 
 # local:MyImage控件
 from .Controls.my_image import my_image
+
+# global_var所有方法
+from PCLTheme.global_var import *

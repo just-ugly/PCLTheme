@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from chameleon import PageTemplate
 from PCLTheme import global_var
 
@@ -13,8 +11,8 @@ event_type_list = [
 
 
 def my_button(text: str,
-              margin: list[int] = global_var.get_default_button_margin(),
-              padding: list[int] = global_var.get_default_button_padding(),
+              margin: list[int] = None,
+              padding: list[int] = None,
               color_type: str = None,
               event_type: str = None,
               event_data1: str = None,
@@ -70,6 +68,10 @@ def my_button(text: str,
 """
 
     # margin, padding 检查
+    if margin is None:
+        margin = global_var.get_default_button_margin()
+    if padding is None:
+        padding = global_var.get_default_button_padding()
     margin = global_var.margin_padding_check_convert(margin)
     padding = global_var.margin_padding_check_convert(padding)
 
@@ -87,30 +89,30 @@ def my_button(text: str,
     global_var.row_column_check(row, column)
 
     if row != -1:
-        tpl_text = tpl_text.replace(" ", f" Grid.Row=\"{row}\" ", 1)
+        tpl_text = tpl_text.replace(" ", " Grid.Row=\"${row}\" ", 1)
     if column != -1:
-        tpl_text = tpl_text.replace(" ", f" Grid.Column=\"{column}\" ", 1)
+        tpl_text = tpl_text.replace(" ", " Grid.Column=\"${column}\" ", 1)
 
     # 插入width和height参数
     if width is not None:
-        tpl_text = tpl_text.replace(" />", f" Width=\"{width}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " Width=\"${width}\" />", 1)
     if height is not None:
-        tpl_text = tpl_text.replace(" />", f" Height=\"{height}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " Height=\"${height}\" />", 1)
 
     # 插入对齐参数
     if horizontal_alignment != "Stretch":
-        tpl_text = tpl_text.replace(" />", f" HorizontalAlignment=\"{horizontal_alignment}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " HorizontalAlignment=\"${horizontal_alignment}\" />", 1)
     if vertical_alignment != "Stretch":
-        tpl_text = tpl_text.replace(" />", f" VerticalAlignment=\"{vertical_alignment}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " VerticalAlignment=\"${vertical_alignment}\" />", 1)
 
     # 插入颜色参数
     if color_type is not None:
-        tpl_text = tpl_text.replace(" />", f" ColorType=\"{color_type}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " ColorType=\"${color_type}\" />", 1)
 
 
     # 插入事件参数
     if event_type is not None:
-        tpl_text = tpl_text.replace(" />", f" EventType=\"{event_type}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " EventType=\"${event_type}\" />", 1)
 
     event_data = None
     # 拼凑事件数据并插入
@@ -121,7 +123,7 @@ def my_button(text: str,
             if event_data3 is not None:
                 event_data = event_data + "|" + event_data3
 
-        tpl_text = tpl_text.replace(" />", f" EventData=\"{event_data}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " EventData=\"${event_data}\" />", 1)
 
     # 包装
     template = PageTemplate(tpl_text)

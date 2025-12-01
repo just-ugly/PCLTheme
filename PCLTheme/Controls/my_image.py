@@ -6,7 +6,7 @@ def my_image(source: str,
              fallback_source: str = None,
              loading_source: str = None,
              enable_cache: bool = True,
-             margin: list[int] = global_var.get_default_image_margin(),
+             margin: list[int] = None,
              row: int = -1,
              column: int = -1,
              width: int = None,
@@ -39,36 +39,38 @@ def my_image(source: str,
 """
 
     # 检查参数正确性
+    if margin is None:
+        margin = global_var.get_default_image_margin()
     margin = global_var.margin_padding_check_convert(margin)
 
     # 检查并插入Grid.Column和Grid.Row参数
     global_var.row_column_check(row, column)
 
     if row != -1:
-        tpl_text = tpl_text.replace(" ", f" Grid.Row=\"{row}\" ", 1)
+        tpl_text = tpl_text.replace(" ", " Grid.Row=\"${row}\" ", 1)
     if column != -1:
-        tpl_text = tpl_text.replace(" ", f" Grid.Column=\"{column}\" ", 1)
+        tpl_text = tpl_text.replace(" ", " Grid.Column=\"${column}\" ", 1)
 
     # 插入width和height参数
     if width is not None:
-        tpl_text = tpl_text.replace(" />", f" Width=\"{width}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " Width=\"${width}\" />", 1)
     if height is not None:
-        tpl_text = tpl_text.replace(" />", f" Height=\"{height}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " Height=\"${height}\" />", 1)
 
     # 插入对齐参数
     if horizontal_alignment != "Stretch":
-        tpl_text = tpl_text.replace(" />", f" HorizontalAlignment=\"{horizontal_alignment}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " HorizontalAlignment=\"${horizontal_alignment}\" />", 1)
     if vertical_alignment != "Stretch":
-        tpl_text = tpl_text.replace(" />", f" VerticalAlignment=\"{vertical_alignment}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " VerticalAlignment=\"${vertical_alignment}\" />", 1)
 
     # 插入图片参数和缓存参数
 
     if fallback_source is not None:
-        tpl_text = tpl_text.replace(" />", f" FallbackSource=\"{fallback_source}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " FallbackSource=\"${fallback_source}\" />", 1)
     if loading_source is not None:
-        tpl_text = tpl_text.replace(" />", f" LoadingSource=\"{loading_source}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " LoadingSource=\"${loading_source}\" />", 1)
     if not enable_cache:
-        tpl_text = tpl_text.replace(" />", f" EnableCache=\"{enable_cache}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " EnableCache=\"${enable_cache}\" />", 1)
 
     # 包装
     template = PageTemplate(tpl_text)

@@ -11,7 +11,7 @@ class warp_panel:
                  orientation: str = "Vertical",
                  horizontal_alignment: str = "Stretch",
                  vertical_alignment: str = "Stretch",
-                 margin: list[int] = global_var.get_default_panel_margin(),
+                 margin: list[int] = None,
                  row: int = -1,
                  column: int = -1
                  ):
@@ -39,6 +39,8 @@ class warp_panel:
         self.column = column
 
         # 检查并转换参数正确性
+        if margin is None:
+            self.margin = global_var.get_default_panel_margin()
         self.margin = global_var.margin_padding_check_convert(self.margin)
 
         # 检查排列方式参数

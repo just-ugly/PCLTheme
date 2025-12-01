@@ -32,6 +32,7 @@ _default_button_margin = [0, 4, 0, 10]
 _default_image_margin = [0, 0, 0, 0]
 
 _default_button_padding = [0, 0, 0, 0]
+_default_text_padding = [0, 0, 0, 0]
 
 
 _default_text_size = 16
@@ -316,6 +317,24 @@ def set_default_button_padding(button_padding: list):
     if len(button_padding) not in [4, 3, 2, 1]:
         raise ValueError("button_padding参数错误, list长度需为1~4")
     _default_button_padding = button_padding
+
+
+def get_default_text_padding():
+    """
+    返回 _default_text_padding
+    """
+    return _default_text_padding
+
+
+def set_default_text_padding(text_padding: list):
+    """
+    设置 _default_text_padding
+    :param text_padding: 默认text_padding
+    """
+    global _default_text_padding
+    if len(text_padding) not in [4, 3, 2, 1]:
+        raise ValueError("text_padding参数错误, list长度需为1~4")
+    _default_text_padding = text_padding
 
 
 def get_default_text_size():

@@ -13,7 +13,7 @@ class my_card:
                  title: str,
                  can_swap: bool = True,
                  default_swaped: bool = False,
-                 margin: list[int] = global_var.get_default_card_margin(),
+                 margin: list[int] = None,
                  row: int = -1,
                  column: int = -1,
                  width: int = None,
@@ -53,6 +53,8 @@ class my_card:
         self.vertical_alignment = vertical_alignment
 
         # 检查并转换margin
+        if margin is None:
+            self.margin = global_var.get_default_card_margin()
         self.margin = global_var.margin_padding_check_convert(self.margin)
 
         # 检测折叠参数合理性

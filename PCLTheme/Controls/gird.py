@@ -15,7 +15,7 @@ class grid:
                  column_width: list = None,
                  row: int = 1,
                  row_height: list = None,
-                 margin: list[int] = global_var.get_default_grid_margin(),
+                 margin: list[int] = None,
                  self_row: int = -1,
                  self_column: int = -1
                  ):
@@ -45,6 +45,8 @@ class grid:
         self.self_column = self_column
 
         # 检查并转换参数正确性
+        if margin is None:
+            self.margin = global_var.get_default_grid_margin()
         self.margin = global_var.margin_padding_check_convert(self.margin)
 
         if column < 1:

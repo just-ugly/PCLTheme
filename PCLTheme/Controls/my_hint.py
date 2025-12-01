@@ -3,7 +3,7 @@ from PCLTheme import global_var
 
 
 def my_hint(text: str,
-            margin: list[int] = global_var.get_default_grid_margin(),
+            margin: list[int] = None,
             theme: str = "Blue",
             row: int = -1,
             column: int = -1,
@@ -36,6 +36,8 @@ def my_hint(text: str,
 """
 
     # 检查参数正确性
+    if margin is None:
+        margin = global_var.get_default_grid_margin()
     margin = global_var.margin_padding_check_convert(margin)
     if not isinstance(theme, str) or theme not in ["Blue", "Red", "Yellow"]:
         raise ValueError("theme参数错误, 需要为以下字符串之一: Blue, Red, Yellow")
@@ -44,22 +46,22 @@ def my_hint(text: str,
     global_var.row_column_check(row, column)
 
     if row != -1:
-        tpl_text = tpl_text.replace(" ", f" Grid.Row=\"{row}\" ", 1)
+        tpl_text = tpl_text.replace(" ", " Grid.Row=\"${row}\" ", 1)
     if column != -1:
-        tpl_text = tpl_text.replace(" ", f" Grid.Column=\"{column}\" ", 1)
+        tpl_text = tpl_text.replace(" ", " Grid.Column=\"${column}\" ", 1)
 
 
     # 插入width和height参数
     if width is not None:
-        tpl_text = tpl_text.replace(" />", f" Width=\"{width}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " Width=\"${width}\" />", 1)
     if height is not None:
-        tpl_text = tpl_text.replace(" />", f" Height=\"{height}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " Height=\"${height}\" />", 1)
 
     # 插入对齐参数
     if horizontal_alignment != "Stretch":
-        tpl_text = tpl_text.replace(" />", f" HorizontalAlignment=\"{horizontal_alignment}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " HorizontalAlignment=\"${horizontal_alignment}\" />", 1)
     if vertical_alignment != "Stretch":
-        tpl_text = tpl_text.replace(" />", f" VerticalAlignment=\"{vertical_alignment}\" />", 1)
+        tpl_text = tpl_text.replace(" />", " VerticalAlignment=\"${vertical_alignment}\" />", 1)
 
     # 包装
     template = PageTemplate(tpl_text)

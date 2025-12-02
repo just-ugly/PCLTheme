@@ -30,9 +30,11 @@ _default_hint_margin = [0, 8, 0, 2]
 _default_text_margin = [0, 0, 0, 4]
 _default_button_margin = [0, 4, 0, 10]
 _default_image_margin = [0, 0, 0, 0]
+_default_list_item_margin = [-5, 2, -5, 8]
 
 _default_button_padding = [0, 0, 0, 0]
 _default_text_padding = [0, 0, 0, 0]
+_default_list_item_padding = [0, 0, 0, 0]
 
 
 _default_text_size = 16
@@ -300,6 +302,24 @@ def set_default_image_margin(picture_margin: list):
     _default_image_margin = picture_margin
 
 
+def get_default_list_item_margin():
+    """
+    返回 _default_list_item_margin
+    """
+    return _default_list_item_margin
+
+
+def set_default_list_item_margin(list_item_margin: list):
+    """
+    设置 _default_list_item_margin
+    :param list_item_margin: 默认list_item_margin
+    """
+    global _default_list_item_margin
+    if len(list_item_margin) not in [4, 3, 2, 1]:
+        raise ValueError("list_item_margin参数错误, list长度需为1~4")
+    _default_list_item_margin = list_item_margin
+
+
 # padding
 def get_default_button_padding():
     """
@@ -335,6 +355,24 @@ def set_default_text_padding(text_padding: list):
     if len(text_padding) not in [4, 3, 2, 1]:
         raise ValueError("text_padding参数错误, list长度需为1~4")
     _default_text_padding = text_padding
+
+
+def get_default_list_item_padding():
+    """
+    返回 _default_list_item_padding
+    """
+    return _default_list_item_padding
+
+
+def set_default_list_item_padding(list_item_padding: list):
+    """
+    设置 _default_list_item_padding
+    :param list_item_padding: 默认list_item_padding
+    """
+    global _default_list_item_padding
+    if len(list_item_padding) not in [4, 3, 2, 1]:
+        raise ValueError("list_item_padding参数错误, list长度需为1~4")
+    _default_list_item_padding = list_item_padding
 
 
 def get_default_text_size():

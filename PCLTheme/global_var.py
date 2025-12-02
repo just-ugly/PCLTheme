@@ -22,7 +22,6 @@ _container_rows = []
 _container_columns = []
 _container_stack = []
 
-
 _default_grid_margin = [0, 0, 0, 0]
 _default_panel_margin = [25, 40, 23, 15]
 _default_card_margin = [0, 0, 0, 15]
@@ -32,12 +31,13 @@ _default_button_margin = [0, 4, 0, 10]
 _default_image_margin = [0, 0, 0, 0]
 _default_list_item_margin = [-5, 2, -5, 8]
 _default_icon_text_button_margin = [0, 4, 0, 8]
+_default_icon_button_margin = [0, 4, 0, 0]
 
 _default_button_padding = [0, 0, 0, 0]
 _default_text_padding = [0, 0, 0, 0]
 _default_list_item_padding = [0, 0, 0, 0]
 _default_icon_text_button_padding = [0, 0, 0, 0]
-
+_default_icon_button_padding = [0, 0, 0, 0]
 
 _default_text_size = 16
 
@@ -339,6 +339,23 @@ def set_default_icon_text_button_margin(icon_text_button_margin: list):
         raise ValueError("icon_text_button_margin参数错误, list长度需为1~4")
 
 
+def get_default_icon_button_margin():
+    """
+    返回 _default_icon_button_margin
+    """
+    return _default_icon_button_margin
+
+
+def set_default_icon_button_margin(icon_button_margin: list):
+    """
+     设置 _default_icon_button_margin
+     :param icon_button_margin: 默认icon_button_margin
+     """
+    global _default_icon_button_margin
+    if len(icon_button_margin) not in [4, 3, 2, 1]:
+        raise ValueError("icon_button_margin参数错误, list长度需为1~4")
+
+
 # padding
 def get_default_button_padding():
     """
@@ -409,6 +426,23 @@ def set_default_icon_text_button_padding(icon_text_button_padding: list):
     global _default_icon_text_button_padding
     if len(icon_text_button_padding) not in [4, 3, 2, 1]:
         raise ValueError("icon_text_button_padding参数错误, list长度需为1~4")
+
+
+def get_default_icon_button_padding():
+    """
+    返回 _default_icon_button_padding
+    """
+    return _default_icon_button_padding
+
+
+def set_default_icon_button_padding(icon_button_padding: list):
+    """
+    设置 _default_icon_button_padding
+    :param icon_button_padding: 默认icon_button_padding
+    """
+    global _default_icon_button_padding
+    if len(icon_button_padding) not in [4, 3, 2, 1]:
+        raise ValueError("icon_button_padding参数错误, list长度需为1~4")
 
 
 def get_default_text_size():

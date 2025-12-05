@@ -15,7 +15,6 @@ def my_list_item(logo: str = None,
                  info: str = None,
                  list_type: str = None,
                  margin: list[int] = None,
-                 padding: list[int] = None,
                  event_type: str = None,
                  event_data1: str = None,
                  event_data2: str = None,
@@ -40,13 +39,6 @@ def my_list_item(logo: str = None,
         左右、上下边距；
         左右上下边距。
         默认为 `global_var.get_default_list_item_margin()`
-    :param padding:
-        内边距列表，支持以下格式：
-        左、上、右、下边距；
-        左右、上、下边距；
-        左右、上下边距；
-        左右上下边距。
-        默认为 `global_var.get_default_list_item_padding()`
     :param event_type:
         按钮事件类型,支持以下事件:
         打开网页, 执行命令, 打开文件, 打开帮助, 启动游戏,
@@ -68,7 +60,7 @@ def my_list_item(logo: str = None,
     :param vertical_alignment: 纵向对齐方式；居上：Top、居中：Center、居下：Bottom、拉伸（默认）：Stretch
     """
 
-    tpl_text = """<local:MyListItem Margin="${margin}" Padding="${padding}" />
+    tpl_text = """<local:MyListItem Margin="${margin}" />
 """
 
     if logo is not None:
@@ -84,9 +76,6 @@ def my_list_item(logo: str = None,
     if margin is None:
         margin = global_var.get_default_list_item_margin()
     margin = global_var.margin_padding_check_convert(margin)
-    if padding is None:
-        padding = global_var.get_default_list_item_padding()
-    padding = global_var.margin_padding_check_convert(padding)
 
     # 检查并插入Grid.Column和Grid.Row参数
     global_var.row_column_check(row, column)
@@ -139,7 +128,6 @@ def my_list_item(logo: str = None,
         "info": info,
         "type": list_type,
         "margin": margin,
-        "padding": padding,
         "event_type": event_type,
         "event_data": event_data,
         "row": row,

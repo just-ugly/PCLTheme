@@ -13,7 +13,7 @@ event_type_list = [
 def my_icon_text_button(text: str = None,
                         logo: str = None,
                         logo_scale: float = 1,
-                        theme: str = None,
+                        color_type: str = None,
                         margin: list[int] = None,
                         padding: list[int] = None,
                         event_type: str = None,
@@ -32,7 +32,7 @@ def my_icon_text_button(text: str = None,
     :param text: 按钮文字
     :param logo: 按钮图标
     :param logo_scale: 按钮图标缩放比例
-    :param theme: 按钮主题, Highlight 为当前启动器的主题颜色，默认为黑色
+    :param color_type: 按钮主题, Highlight 为当前启动器的主题颜色，默认为黑色
     :param margin:
         边距列表，支持以下格式：
         左、上、右、下边距；
@@ -71,8 +71,8 @@ def my_icon_text_button(text: str = None,
     tpl_text = """<local:MyIconTextButton Margin="${margin}" Padding="${padding}" />
 """
 
-    if theme is not None:
-        tpl_text = tpl_text.replace(" ", " Theme=\"${theme}\" ", )
+    if color_type is not None:
+        tpl_text = tpl_text.replace(" ", " ColorType=\"${color_type}\" ", 1)
 
     if logo_scale is not None:
         tpl_text = tpl_text.replace(" ", " LogoScale=\"${logo_scale}\" ", 1)
@@ -133,7 +133,7 @@ def my_icon_text_button(text: str = None,
         "text": text,
         "logo": logo,
         "logo_scale": logo_scale,
-        "theme": theme,
+        "color_type": color_type,
         "margin": margin,
         "padding": padding,
         "event_type": event_type,

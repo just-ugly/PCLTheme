@@ -34,5 +34,8 @@ from .Controls.my_list_item import my_list_item
 # local.MyIconTextButton控件
 from .Controls.my_icon_text_button import my_icon_text_button
 
+# local:MyIconButton控件
+from .Controls.my_icon_button import my_icon_button
+
 # global_var所有方法
 from PCLTheme.global_var import *

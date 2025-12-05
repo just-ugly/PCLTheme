@@ -10,22 +10,22 @@ event_type_list = [
 ]
 
 
-def my_icon_text_button(logo: str = None,
-                        logo_scale: float = 1,
-                        theme: str = "Color",
-                        margin: list[int] = None,
-                        padding: list[int] = None,
-                        event_type: str = None,
-                        event_data1: str = None,
-                        event_data2: str = None,
-                        event_data3: str = None,
-                        row: int = -1,
-                        column: int = -1,
-                        width: int = None,
-                        height: int = None,
-                        horizontal_alignment: str = "Stretch",
-                        vertical_alignment: str = "Stretch"
-                        ):
+def my_icon_button(logo: str = None,
+                   logo_scale: float = 1,
+                   theme: str = "Color",
+                   margin: list[int] = None,
+                   padding: list[int] = None,
+                   event_type: str = None,
+                   event_data1: str = None,
+                   event_data2: str = None,
+                   event_data3: str = None,
+                   row: int = -1,
+                   column: int = -1,
+                   width: int = None,
+                   height: int = None,
+                   horizontal_alignment: str = "Stretch",
+                   vertical_alignment: str = "Stretch"
+                   ):
     """
         创建一个图标按钮
         :param logo: 按钮图标
@@ -70,7 +70,7 @@ def my_icon_text_button(logo: str = None,
 """
 
     if theme != "Color":
-        tpl_text = tpl_text.replace(" ", " Theme=\"${theme}\" ", )
+        tpl_text = tpl_text.replace(" ", " Theme=\"${theme}\" ", 1)
 
     if logo_scale is not None:
         tpl_text = tpl_text.replace(" ", " LogoScale=\"${logo_scale}\" ", 1)
@@ -145,5 +145,3 @@ def my_icon_text_button(logo: str = None,
     else:
         hint_xaml = "    " * global_var.get_containers() + template(**data)
         global_var.stack_template_stack(hint_xaml)
-
-

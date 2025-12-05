@@ -1,6 +1,6 @@
 # PCLTheme
 
-一个用 Python 构建 PCL（个人启动页/主页）XAML 模板的轻量库，目标是让用户无需编写 XAML，就能通过 Python 语法快速构建并输出 PCL 自定义主页（Custom.xaml）。
+一个用 Python 构建 PCL 主页 XAML 的轻量库，目标是让用户无需编写 XAML，就能通过 Python 语法快速构建并输出 PCL 自定义主页（Custom.xaml）。
 
 
 ### :star:主要特点

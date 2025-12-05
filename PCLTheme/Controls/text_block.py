@@ -1,7 +1,8 @@
 import re
-from pydantic.v1.color import Color
 
 from chameleon import PageTemplate
+from pydantic.v1.color import Color
+
 from PCLTheme import global_var
 
 
@@ -75,12 +76,10 @@ def text_block(text: str,
     # 检查并插入Grid.Column和Grid.Row参数
     global_var.row_column_check(row, column)
 
-
     if row != -1:
         tpl_text = tpl_text.replace(" ", " Grid.Row=\"${row}\" ", 1)
     if column != -1:
         tpl_text = tpl_text.replace(" ", " Grid.Column=\"${column}\" ", 1)
-
 
     # 插入width和height参数
     if width is not None:

@@ -1,6 +1,7 @@
 import warnings
 
 from chameleon import PageTemplate
+
 from PCLTheme import global_var
 
 
@@ -62,7 +63,6 @@ class my_card:
             raise ValueError("""can_swap参数错误, 当default_swaped为True时, can_swap必须为True.
             一个卡片不能在不可折叠的同时默认折叠""")
 
-
     def __enter__(self):
         containers = global_var.get_containers()
         if global_var.card_in_card():
@@ -79,7 +79,6 @@ class my_card:
             card_xaml = card_xaml.replace("<local:MyCard ", f"<local:MyCard Grid.Row=\"{self.row}\" ", 1)
         if self.column != -1:
             card_xaml = card_xaml.replace("<local:MyCard ", f"<local:MyCard Grid.Column=\"{self.column}\" ", 1)
-
 
         # 插入width和height参数
         if self.width is not None:
@@ -101,7 +100,7 @@ class my_card:
     def __exit__(self, exc_type, exc_val, exc_tb):
         card_xaml = global_var.pop_template_stack()
         containers = global_var.get_containers()
-        card_xaml += "    " * (containers-1) + f"""</local:MyCard>
+        card_xaml += "    " * (containers - 1) + f"""</local:MyCard>
 """
         global_var.reduce_container()
         containers -= 1

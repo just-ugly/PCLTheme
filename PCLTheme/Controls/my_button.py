@@ -1,4 +1,5 @@
 from chameleon import PageTemplate
+
 from PCLTheme import global_var
 
 event_type_list = [
@@ -108,7 +109,6 @@ def my_button(text: str,
     # 插入颜色参数
     if color_type is not None:
         tpl_text = tpl_text.replace(" />", " ColorType=\"${color_type}\" />", 1)
-
 
     # 插入事件参数
     if event_type is not None:

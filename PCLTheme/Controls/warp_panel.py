@@ -1,4 +1,5 @@
 from chameleon import PageTemplate
+
 from PCLTheme import global_var
 
 
@@ -67,7 +68,6 @@ class warp_panel:
         if self.vertical_alignment != "Stretch":
             panel_xaml = panel_xaml.replace(" >", f" VerticalAlignment=\"{self.vertical_alignment}\" >", 1)
 
-
         global_var.add_container()
         global_var.add_container_row(1)
         global_var.add_container_column(1)
@@ -76,9 +76,8 @@ class warp_panel:
     def __exit__(self, exc_type, exc_val, exc_tb):
         panel_xaml = global_var.pop_template_stack()
         containers = global_var.get_containers()
-        panel_xaml += "    " * (containers-1) + f"""</WarpPanel>
+        panel_xaml += "    " * (containers - 1) + f"""</WarpPanel>
 """
-
 
         global_var.reduce_container()
         containers -= 1

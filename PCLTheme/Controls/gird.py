@@ -1,7 +1,6 @@
-from PCLTheme import global_var
-
 from chameleon import PageTemplate
 
+from PCLTheme import global_var
 
 Pair = dict[PageTemplate, dict]
 
@@ -10,6 +9,7 @@ class grid:
     """
     Grid控件
     """
+
     def __init__(self,
                  column: int = 1,
                  column_width: list = None,
@@ -58,7 +58,6 @@ class grid:
         if row_height is not None and len(row_height) != row:
             raise ValueError("row_height参数错误, 需要与row参数一致")
 
-
         # 转换column_width参数
         if column_width is None:
             self.column_width = ["1*"] * self.column
@@ -66,7 +65,6 @@ class grid:
         # 转换row_height参数
         if row_height is None:
             self.row_height = ["1*"] * self.row
-
 
     def __enter__(self):
         containers = global_var.get_containers()
@@ -78,7 +76,7 @@ class grid:
             grid_xaml += "    " * containers + f"""<Grid.ColumnDefinitions>
 """
             for i in range(self.column):
-                grid_xaml += "    " * (containers+1) + f"""<ColumnDefinition Width=\"{self.column_width[i]}\"/>
+                grid_xaml += "    " * (containers + 1) + f"""<ColumnDefinition Width=\"{self.column_width[i]}\"/>
 """
 
             grid_xaml += "    " * containers + f"""</Grid.ColumnDefinitions>
@@ -87,7 +85,7 @@ class grid:
             grid_xaml += "    " * containers + f"""<Grid.RowDefinitions>
 """
             for i in range(self.row):
-                grid_xaml += "    " * (containers+1) + f"""<RowDefinition Height=\"{self.row_height[i]}\"/>
+                grid_xaml += "    " * (containers + 1) + f"""<RowDefinition Height=\"{self.row_height[i]}\"/>
 """
 
             grid_xaml += "    " * containers + f"""</Grid.RowDefinitions>
@@ -103,17 +101,15 @@ class grid:
         else:
             grid_xaml = grid_xaml
 
-
         global_var.add_container()
         global_var.add_container_row(self.row)
         global_var.add_container_column(self.column)
         global_var.add_template_stack(grid_xaml)
 
-
     def __exit__(self, exc_type, exc_val, exc_tb):
         grid_xaml = global_var.pop_template_stack()
         containers = global_var.get_containers()
-        grid_xaml += "    " * (containers-1) + f"""</Grid>
+        grid_xaml += "    " * (containers - 1) + f"""</Grid>
 """
         global_var.reduce_container()
         containers -= 1

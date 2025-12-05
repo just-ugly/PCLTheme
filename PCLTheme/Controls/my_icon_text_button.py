@@ -1,4 +1,5 @@
 from chameleon import PageTemplate
+
 from PCLTheme import global_var
 
 event_type_list = [
@@ -151,5 +152,3 @@ def my_icon_text_button(text: str = None,
     else:
         hint_xaml = "    " * global_var.get_containers() + template(**data)
         global_var.stack_template_stack(hint_xaml)
-
-

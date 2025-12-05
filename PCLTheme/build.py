@@ -28,6 +28,7 @@ def build(file_path: str = None,
         template = list(template_dict.keys())[0]
         data = template_dict[template]
         out_xaml += str(template(**data))
+        out_xaml = out_xaml.replace("&amp;#xA;", "&#xA;")
 
     if file_path is not None:
         file_path = file_path + "\\" + file_name

@@ -1,4 +1,5 @@
 from chameleon import PageTemplate
+
 from PCLTheme import global_var
 
 event_type_list = [
@@ -87,7 +88,7 @@ def my_list_item(logo: str = None,
 
     event_data = None
     if list_type is not None:
-        if list_type is "Clickable":
+        if list_type == "Clickable":
             tpl_text = tpl_text.replace(" />", " Type=\"Clickable\" />", 1)
 
             # 插入事件参数
@@ -143,5 +144,3 @@ def my_list_item(logo: str = None,
     else:
         hint_xaml = "    " * global_var.get_containers() + template(**data)
         global_var.stack_template_stack(hint_xaml)
-
-

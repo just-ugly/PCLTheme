@@ -1,12 +1,12 @@
 # PCLTheme
 
-一个用 Python 构建 PCL 主页 XAML 的轻量库，目标是让用户无需编写 XAML，就能通过 Python 语法快速构建并输出 PCL 自定义主页（Custom.xaml）。
+一个用 Python 构建 PCL 主页 XAML 的轻量库，目标是让用户无需编写 XAML，就能通过 Python 语法快速构建并输出 PCL 自定义主页（Custom.xaml）
 
 
 ### :star:主要特点
 
 - 用 Python API 构建 XAML，降低学习 XAML 的门槛
-- 支持容器（Grid、StackPanel、Card 等）与PCL控件（TextBlock、MyButton、MyImage、MyHint 等）
+- 支持容器（Grid、StackPanel、MyCard 等）与PCL控件（TextBlock、MyButton、MyImage、MyHint 等）
 - 支持嵌套容器与栈式渲染，按添加顺序拼接输出
 - 可直接保存为 PCL 本地自定义主页路径（例如保存为 Custom.xaml）
 
@@ -18,7 +18,7 @@
 
 ### :computer: 安装方式
 
-从 PyPI 安装
+从 PyPI 安装（最新版本：0.2.3）
 
 ``` bash
 pip install PCLTheme

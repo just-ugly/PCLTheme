@@ -110,7 +110,7 @@ pt.set_default_panel_margin([20, 30, 20, 12])
 - 大多数控件会对 `margin`/`padding` 长度（只接受长度 1~4）做检查。
 - 当控件需要在 Grid 中指定 `row`/`column` 时，如果当前并不在有 row/column 的容器内部，会抛出 ValueError。
 - 请按照控件函数签名提供正确类型与取值范围，会在运行时抛出有意义的异常提示。
-- 在 MyCard 中使用 MyCard 会被警告（:alien:邪修）
+- 在 MyCard 中使用 MyCard 会被警告（ :alien: 邪修）
 
 ## :next_track_button: TODOLIST
 

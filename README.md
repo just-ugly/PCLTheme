@@ -75,6 +75,11 @@ if __name__ == "__main__":
 
 ```
 
+效果：
+
+<img width="1845" height="1281" alt="image" src="https://github.com/user-attachments/assets/e5645f8c-0ec3-4591-9c0e-a7b8f82fff52" />
+
+
 ## :book: 常用控件速览
 
 目前已包含除 “进阶：高级自定义事件” 板块外所有存在于《自定义主页与帮助 XAML格式》帮助文档中的控件

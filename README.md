@@ -119,7 +119,6 @@ pt.set_default_panel_margin([20, 30, 20, 12])
 
 ## :next_track_button: TODOLIST
 
-- [ ] 实现无法寻找到文件时，自动创建文件
 - [ ] 实现“进阶：高级自定义事件”中的控件
 - [ ] 实现所有方法的`Opacity`属性
 - [ ] 实现所有方法的`Visibility`属性
